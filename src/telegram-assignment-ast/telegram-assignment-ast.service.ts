@@ -25,11 +25,6 @@ const fetchetails = async (place: string, UserId: string, apiId: string, sendMes
     if(message != 'city not found'){
         const { main } = data; // Destructuring the 'main' object from the 'data'
             const { temp, humidity, pressure } = main; // Destructuring specific properties from 'main'
-            // console.log(temp);
-            // console.log(humidity);
-            // console.log(pressure);
-            // console.log(userId);
-            // Additional data destructuring if needed
             const { main: weathermood } = data.weather[0];
             const { name } = data;
             const { speed } = data.wind;
