@@ -9,7 +9,7 @@ const TelegramBot = require('node-telegram-bot-api');
 
 const inlineKeyboardMarkup = {
     inline_keyboard: [
-        [{ text: 'Subscribe', url: 'https://ed51-2409-40e6-37-d98e-7d05-e06f-e42c-3cc6.ngrok-free.app/' }]
+        [{ text: 'My Github', url: 'https://github.com/Kamal59913' }]
     ]
 };
 const Tele_Token = "6815935158:AAFtgo9kj59I8LumUX5xdkAAe6aq0b3MALo"
