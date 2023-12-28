@@ -4,8 +4,10 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
+  const allowedOrigins = ['http://localhost:3000', 'https://nest-js-front-end.vercel.app'];
+
   app.enableCors({
-    origin:'http://localhost:3001', // Specify the allowed origin(s)
+    origin:allowedOrigins, // Specify the allowed origin(s)
     methods: 'GET,PUT,POST,DELETE', // Specify which methods are allowed
     allowedHeaders: 'Content-Type,Authorization', // Specify allowed headers
     credentials: true, // Allow sending cookies or other credentials
