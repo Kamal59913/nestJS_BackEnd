@@ -20,8 +20,8 @@ export class AppController {
       const token = await this.appService.googleAuthRedirect(req);
       
        res.cookie('token', token, {
-        httpOnly: false,
-        secure:false
+        httpOnly: true,
+        secure:true
       });
 
       return res.status(200).json({success:"Successful! Close the window and Sign-In"});
