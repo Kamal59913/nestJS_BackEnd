@@ -23,8 +23,8 @@ export class AppController {
         httpOnly: true,
         secure:true
       });
-
-      return res.status(200).json({success:"Successful! Close the window and Sign-In"});
+  
+      return res.status(200).json({success:"Successful! Close the window and Sign-In", token:token}).send(token);
     } catch (error) {
       console.error('Error in Google authentication:', error);
       return res.status(500).json({ error: 'Failed to authenticate with Google' });
