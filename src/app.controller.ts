@@ -21,10 +21,11 @@ export class AppController {
       
        res.cookie('token', token, {
         httpOnly: true,
-        secure:true
+        secure:true,
+        sameSite: 'none'
       });
   
-      return res.status(200).json({success:"Successful! Close the window and Sign-In", token:token}).send(token);
+      return res.status(200).json({success:"Successful! Close the window and Sign-In, Or Go back to the previous window"});
     } catch (error) {
       console.error('Error in Google authentication:', error);
       return res.status(500).json({ error: 'Failed to authenticate with Google' });
