@@ -30,6 +30,7 @@
     "@nestjs/platform-express": "^10.0.0",
     "@nestjs/schedule": "^4.0.0",
     "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
     "google-auth-library": "^9.4.1",
     "mongodb": "^6.3.0",
     "mongoose": "^8.0.3",
