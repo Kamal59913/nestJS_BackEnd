@@ -6,19 +6,14 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 export class Admin{
 
  @Prop()
- googleId: string;
-
- @Prop()
  name: string;
 
  @Prop()
- emailid: string;
+ email: string;
 
  @Prop()
- username: string;
+ image: string;
 
- @Prop()
- googleprofileimage: string;
 }
 
 

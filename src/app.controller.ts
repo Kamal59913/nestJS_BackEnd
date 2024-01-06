@@ -1,49 +1,38 @@
-import { Body, Param, Put, Controller, Get, UseGuards, Req, Post, Res } from '@nestjs/common';
+import { Body, Controller, Get, Post} from '@nestjs/common';
 import { AppService } from './app.service';
 import { Admin } from './admin.schema';
-import { AuthGuard } from '@nestjs/passport'
-import { createAdminDto } from './create-admin.dto';
-import { Response } from 'express';
+import { OAuth2Client } from 'google-auth-library';
+
+
+const client = new OAuth2Client(
+  '560963277459-nl156iumhmjeeu301ln2mi208bhfdapn.apps.googleusercontent.com',
+  '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',
+);
 
 @Controller() 
 export class AppController {
   constructor(private readonly appService: AppService) { }
 
-  @Get('google')
-  @UseGuards(AuthGuard('google'))
-  async googleAuth(@Req() req) { }
+  @Post('/login')
+  async login(@Body('token') token): Promise<any> {
 
-  @Get('auth/google/callback')
-  @UseGuards(AuthGuard('google'))
-  async googleAuthCallback(@Req() req, @Res() res: Response) {
-    try {
-      const token = await this.appService.googleAuthRedirect(req);
-      
-       res.cookie('token', token, {
-        httpOnly: true,
-        secure:true,
-        sameSite: 'none'
-      });
-  
-      return res.status(200).json({success:"Successful! Close the window and Sign-In, Or Go back to the previous window"});
-    } catch (error) {
-      console.error('Error in Google authentication:', error);
-      return res.status(500).json({ error: 'Failed to authenticate with Google' });
-    }
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience:'560963277459-nl156iumhmjeeu301ln2mi208bhfdapn.apps.googleusercontent.com'
+    });
+
+    const payload = ticket.getPayload();
+    const data = await this.appService.login({
+      email: payload.email,
+      name: payload.name,
+      image: payload.picture
+    })
+    console.log('here is the data',data)
+    return data;
   }
-
-  @Get('google-sign-in')
-  initiateGoogleSignIn(@Res() res: Response): void {
-    res.sendStatus(200);
-  }
-
   @Get()
   async getAllAdmins(): Promise<Admin[]> {
     return this.appService.findAllAdmin();
   }
 
-  @Post('adminSignupData')
-  async createAdmin(@Body() adminData: createAdminDto): Promise<Admin> {
-    return this.appService.createAdmin(adminData);
-  }
 }
